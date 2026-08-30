@@ -1,0 +1,9 @@
+{
+  "name": "@rtai/web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {"dev":"vite","build":"vite build","typecheck":"tsc --noEmit","test":"vitest run","lint":"eslint ."},
+  "dependencies": {"@vitejs/plugin-react":"latest","vite":"latest","typescript":"^5.8.3","react":"latest","react-dom":"latest","lucide-react":"latest"},
+  "devDependencies": {"vitest":"latest"}
+}
