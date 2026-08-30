@@ -14,13 +14,21 @@ export class LiveGenerationController {
     this.active?.cancel();
     this.timer = setTimeout(async () => {
       if (revision !== this.revision) return;
-      const job = await this.provider.generate(context);
-      if (revision !== this.revision) {
-        job.cancel();
-        return;
+      try {
+        const job = await this.provider.generate(context);
+        if (revision !== this.revision) {
+          job.cancel();
+          return;
+        }
+        this.active = job;
+        onJob(job);
+      } catch (err) {
+        if (revision === this.revision) {
+          console.error("[generation] provider.generate failed", err);
+        }
+      } finally {
+        if (revision === this.revision) this.timer = undefined;
       }
-      this.active = job;
-      onJob(job);
     }, this.policy.debounceMs);
   }
 
